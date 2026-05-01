@@ -72,14 +72,20 @@
       <section class="transactions-section">
         <div class="transactions-header">
           <h2 class="section-title">Transaction History</h2>
-          <div class="sort-controls">
-            <label for="sort-by" class="sort-label">Sort by:</label>
-            <select id="sort-by" class="sort-select" aria-label="Sort transactions">
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
-              <option value="amount-asc">Amount (Low to High)</option>
-              <option value="amount-desc">Amount (High to Low)</option>
-            </select>
+          <div class="transactions-controls">
+            <div class="sort-controls">
+              <label for="sort-by" class="sort-label">Sort by:</label>
+              <select id="sort-by" class="sort-select" aria-label="Sort transactions">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="amount-asc">Amount (Low to High)</option>
+                <option value="amount-desc">Amount (High to Low)</option>
+              </select>
+            </div>
+            <button id="delete-all-btn" class="btn btn-danger" aria-label="Delete all transactions"
+              title="Delete all transactions">
+              Delete All
+            </button>
           </div>
         </div>
         <div class="transactions-list" id="transactions-list" role="region" aria-label="Transaction history">

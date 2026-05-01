@@ -1087,6 +1087,12 @@ class DataSerializer {
   expenseForm.addEventListener('submit', handleFormSubmit);
   sortSelect.addEventListener('change', handleSortChange);
 
+  // Delete all button
+  const deleteAllBtn = document.getElementById('delete-all-btn');
+  if (deleteAllBtn) {
+    deleteAllBtn.addEventListener('click', handleDeleteAll);
+  }
+
   // Initialization
   function init() {
     transactionManager.loadFromStorage();
@@ -1103,6 +1109,32 @@ class DataSerializer {
   function handleSortChange() {
     currentSort = sortSelect.value;
     updateUI();
+  }
+
+  // Handle delete all transactions
+  function handleDeleteAll() {
+    const transactionCount = transactionManager.transactions.length;
+
+    if (transactionCount === 0) {
+      showTemporaryMessage('No transactions to delete');
+      return;
+    }
+
+    // Validation: confirm with user
+    const confirmMessage = `Are you sure you want to delete all ${transactionCount} transactions? This action cannot be undone.`;
+
+    if (confirm(confirmMessage)) {
+      // Double validation for safety
+      const doubleCheck = confirm(`Final warning: This will permanently delete ${transactionCount} transactions. Click OK to proceed.`);
+
+      if (doubleCheck) {
+        transactionManager.clearAll();
+        showTemporaryMessage(`Successfully deleted ${transactionCount} transactions`);
+        updateUI();
+      } else {
+        showTemporaryMessage('Delete cancelled');
+      }
+    }
   }
 
   // Add sample transactions for testing
@@ -1173,6 +1205,13 @@ class DataSerializer {
 
     // Update category sort options (use all transactions)
     populateCategorySortOptions(allTransactions);
+
+    // Update delete all button state
+    const deleteAllBtn = document.getElementById('delete-all-btn');
+    if (deleteAllBtn) {
+      deleteAllBtn.disabled = allTransactions.length === 0;
+      deleteAllBtn.setAttribute('aria-disabled', allTransactions.length === 0);
+    }
 
     // Save to storage
     transactionManager.saveToStorage();

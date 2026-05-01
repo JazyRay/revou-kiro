@@ -431,6 +431,13 @@ body {
     gap: 15px;
 }
 
+.transactions-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
 .sort-controls {
     display: flex;
     align-items: center;
