@@ -1093,8 +1093,17 @@ class DataSerializer {
     deleteAllBtn.addEventListener('click', handleDeleteAll);
   }
 
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', handleThemeToggle);
+  }
+
   // Initialization
   function init() {
+    // Initialize theme
+    initTheme();
+
     transactionManager.loadFromStorage();
 
     // Jika tidak ada data, tambahkan beberapa contoh untuk testing
@@ -1135,6 +1144,46 @@ class DataSerializer {
         showTemporaryMessage('Delete cancelled');
       }
     }
+  }
+
+  // Handle theme toggle
+  function handleThemeToggle() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    updateThemeIcon(newTheme);
+
+    // Save preference to localStorage
+    localStorage.setItem('expenseTracker_theme', newTheme);
+
+    showTemporaryMessage(`Switched to ${newTheme} theme`);
+  }
+
+  // Update theme icon based on current theme
+  function updateThemeIcon(theme) {
+    const themeIcon = document.querySelector('.theme-icon');
+    if (!themeIcon) return;
+
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    themeIcon.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+
+  // Initialize theme from localStorage or system preference
+  function initTheme() {
+    const savedTheme = localStorage.getItem('expenseTracker_theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    let theme = 'light'; // default
+
+    if (savedTheme) {
+      theme = savedTheme;
+    } else if (systemPrefersDark) {
+      theme = 'dark';
+    }
+
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeIcon(theme);
   }
 
   // Add sample transactions for testing

@@ -12,8 +12,15 @@
 <body>
   <div class="container">
     <header class="app-header">
-      <h1 class="app-title">Expense Tracker</h1>
-      <p class="app-subtitle">Track your Daily Spending</p>
+      <div class="header-top">
+        <div class="header-title">
+          <h1 class="app-title">Expense Tracker</h1>
+          <p class="app-subtitle">Track your Daily Spending</p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+          <span class="theme-icon">🌙</span>
+        </button>
+      </div>
       <div class="balance-display">
         <span class="balance-label">Total Balance</span>
         <span id="balance-amount" class="balance-amount" aria-live="polite" aria-atomic="true">$0.00</span>
